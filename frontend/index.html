@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Resume Scanner</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">⚡ ResumeAI</div>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab('analyze')">🔍 Analyze</button>
+    <button class="tab-btn" onclick="showTab('battle')">⚔️ Battle</button>
+    <button class="tab-btn" onclick="showTab('timemachine')">⏳ Time Machine</button>
+  </div>
+</nav>
+
+<!-- ===== ANALYZE TAB ===== -->
+<div id="tab-analyze" class="tab-content active">
+  <div class="hero">
+    <h1>AI-Powered Resume Scanner</h1>
+    <p>DNA Fingerprint · Lie Detector · Job Market Fit · Live Jobs</p>
+  </div>
+
+  <div class="upload-card" id="drop-analyze">
+    <div class="upload-icon">📄</div>
+    <p>Drag & drop your resume or <label for="file-analyze" class="link">browse</label></p>
+    <input type="file" id="file-analyze" accept=".pdf,.docx" hidden/>
+    <p class="hint">PDF or DOCX · Max 5MB</p>
+    <button class="btn-primary" onclick="analyzeResume()">Analyze Resume</button>
+  </div>
+
+  <div id="analyze-loader" class="loader hidden">
+    <div class="spinner"></div><p>Scanning resume…</p>
+  </div>
+
+  <div id="analyze-results" class="hidden">
+
+    <!-- Contact -->
+    <section class="card" id="sec-contact">
+      <h2>👤 Contact Info</h2>
+      <div id="contact-info" class="contact-grid"></div>
+    </section>
+
+    <!-- DNA -->
+    <section class="card">
+      <h2>🧬 Resume DNA Fingerprint</h2>
+      <div class="dna-layout">
+        <div class="chart-wrap"><canvas id="dna-radar"></canvas></div>
+        <div id="dna-meta"></div>
+      </div>
+    </section>
+
+    <!-- Credibility -->
+    <section class="card">
+      <h2>🔍 Lie Detector / Credibility Score</h2>
+      <div id="cred-score-wrap">
+        <div class="score-ring" id="cred-ring"></div>
+        <div id="cred-verdict"></div>
+      </div>
+      <div id="cred-flags"></div>
+    </section>
+
+    <!-- Skills -->
+    <section class="card">
+      <h2>🛠️ Skills Extracted</h2>
+      <div id="skills-grid"></div>
+    </section>
+
+    <!-- Job Fit -->
+    <section class="card">
+      <h2>🎯 Job Market Fit</h2>
+      <div id="job-fit-list"></div>
+    </section>
+
+    <!-- Live Jobs -->
+    <section class="card">
+      <h2>💼 Live Job Matches</h2>
+      <div id="live-jobs"></div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ===== BATTLE TAB ===== -->
+<div id="tab-battle" class="tab-content hidden">
+  <div class="hero">
+    <h1>⚔️ Resume Battle Mode</h1>
+    <p>Upload two resumes — see who wins head-to-head</p>
+  </div>
+
+  <div class="battle-upload-row">
+    <div class="upload-card small">
+      <div class="upload-icon">🅰️</div>
+      <p>Resume A — <label for="file-battle-a" class="link">browse</label></p>
+      <input type="file" id="file-battle-a" accept=".pdf,.docx" hidden/>
+      <p id="name-a" class="hint">No file chosen</p>
+    </div>
+    <div class="vs-badge">VS</div>
+    <div class="upload-card small">
+      <div class="upload-icon">🅱️</div>
+      <p>Resume B — <label for="file-battle-b" class="link">browse</label></p>
+      <input type="file" id="file-battle-b" accept=".pdf,.docx" hidden/>
+      <p id="name-b" class="hint">No file chosen</p>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:1rem">
+    <button class="btn-primary" onclick="runBattle()">⚔️ Start Battle</button>
+  </div>
+
+  <div id="battle-loader" class="loader hidden"><div class="spinner"></div><p>Fighting…</p></div>
+
+  <div id="battle-results" class="hidden">
+    <div class="card winner-banner" id="winner-banner"></div>
+    <div class="card">
+      <h2>Round-by-Round</h2>
+      <div id="battle-rounds"></div>
+    </div>
+    <div class="battle-cards-row">
+      <div class="card" id="battle-card-a"></div>
+      <div class="card" id="battle-card-b"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TIME MACHINE TAB ===== -->
+<div id="tab-timemachine" class="tab-content hidden">
+  <div class="hero">
+    <h1>⏳ Resume Time Machine</h1>
+    <p>See how your skills' market demand has shifted from 2018 → 2024</p>
+  </div>
+
+  <div class="upload-card" id="drop-tm">
+    <div class="upload-icon">📄</div>
+    <p>Upload resume — <label for="file-tm" class="link">browse</label></p>
+    <input type="file" id="file-tm" accept=".pdf,.docx" hidden/>
+    <p class="hint">PDF or DOCX</p>
+    <button class="btn-primary" onclick="runTimeMachine()">⏳ Run Time Machine</button>
+  </div>
+
+  <div id="tm-loader" class="loader hidden"><div class="spinner"></div><p>Traveling through time…</p></div>
+
+  <div id="tm-results" class="hidden">
+    <div class="card">
+      <h2>📈 Skill Demand Over Time</h2>
+      <canvas id="tm-chart" height="100"></canvas>
+    </div>
+    <div class="tm-trend-row" id="tm-trends"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
